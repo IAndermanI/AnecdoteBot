@@ -25,44 +25,7 @@ def read(message):
     global id, id_prev
     id_prev = id
     id = joke[0]
-    markup=types.InlineKeyboardMarkup(row_width=2)
-    like, dislike = db.DbQuery().get_likes_and_dislikes(id)
-    but_like=types.InlineKeyboardButton('👍 (' +str(like) + ')' , callback_data='+1')
-    but_dislike=types.InlineKeyboardButton('👎 ('+str(dislike) + ')', callback_data='-1')
-    markup.add(but_like, but_dislike)
-    bot.send_message(message.chat.id, joke[1], reply_markup=markup)
-
-
-def par(n):
-    if n == -1:
-        return 1
-    elif n == 1:
-        return -1
-
-@bot.callback_query_handler(func = lambda call: True)
-def answer(call):
-    global id, id_prev, param_dislike, param_like
-    if id == id_prev:
-        param_like = par(param_like)
-        param_dislike = par(param_dislike)
-    else:
-        param_like = 1
-        param_dislike = 1
-    if call.data == '+1':
-        if param_like == 1:
-            bot.send_message(call.from_user.id, "Вы поставили лайк")
-        elif param_like == -1:
-            bot.send_message(call.from_user.id, "Вы убрали лайк")
-        bot.answer_callback_query(call.id)
-        db.DbQuery().change_likes(id, bool=param_like)
-    elif call.data == '-1':
-        if param_dislike == 1:
-            bot.send_message(call.from_user.id, "Вы поставили дизлайк")
-        elif param_dislike == -1:
-            bot.send_message(call.from_user.id, "Вы убрали дизлайк")
-        bot.answer_callback_query(call.id)
-        db.DbQuery().change_dislikes(id, bool=param_dislike)
-    id_prev = id
+    bot.send_message(message.chat.id, joke[1])
 
 
 @bot.message_handler(content_types=['text'], commands=['add'])
