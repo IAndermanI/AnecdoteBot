@@ -90,24 +90,6 @@ class DbQuery:
         else:
             return res[joke_id][1]
 
-    def change_likes(self, joke_id ,bool):
-        with contextlib.closing(sqlite3.connect('db.sqlite3')) as con:
-            with con as cur:
-                query = cur.execute(f"""SELECT likes FROM jokes WHERE id = ?""", (joke_id,))
-                upv = query.fetchone()
-                cur.execute(f"""UPDATE jokes SET likes = ? WHERE id = ?""", (upv[0] + bool, joke_id))
-    def change_dislikes(self, joke_id, bool):
-        with contextlib.closing(sqlite3.connect('db.sqlite3')) as con:
-            with con as cur:
-                query = cur.execute(f"""SELECT dislikes FROM jokes WHERE id = ?""", (joke_id,))
-                upv = query.fetchone()
-                cur.execute(f"""UPDATE jokes SET dislikes = ? WHERE id = ?""", (upv[0] + bool, joke_id))
-    def get_likes_and_dislikes(self,joke_id):
-        with contextlib.closing(sqlite3.connect('db.sqlite3')) as con:
-            with con as cur:
-                query = cur.execute(f"""SELECT likes, dislikes FROM jokes WHERE id = ?""", (joke_id,))
-                upv = query.fetchone()
-                return upv
     def get_random_joke(self, user_id):
         with contextlib.closing(sqlite3.connect('db.sqlite3')) as con:
             with con as cur:
