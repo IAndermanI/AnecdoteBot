@@ -1,7 +1,6 @@
 import sqlite3
 import contextlib
 
-
 class DbInitialization:
 
     def init_jokes(self):
@@ -89,7 +88,6 @@ class DbQuery:
             return "Извините, все шутки закончились"
         else:
             return res[joke_id][1]
-
     def get_random_joke(self, user_id):
         with contextlib.closing(sqlite3.connect('db.sqlite3')) as con:
             with con as cur:
