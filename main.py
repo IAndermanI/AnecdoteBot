@@ -1,7 +1,9 @@
 import db
 import telebot
 from telebot import types
-bot = telebot.TeleBot('5343235488:AAEmX__rzBe8r1nFM1GRQtzKLY3cqT0Zywc')
+
+TOKEN = 'input your tg token'
+bot = telebot.TeleBot(TOKEN)
 
 id = None
 id_prev = None
