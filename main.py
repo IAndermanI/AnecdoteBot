@@ -1,14 +1,18 @@
 import db
 import telebot
-from telebot import types
-bot = telebot.TeleBot('5343235488:AAEmX__rzBe8r1nFM1GRQtzKLY3cqT0Zywc')
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
+bot = telebot.TeleBot(API_KEY)
 
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup=types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    but_read = types.KeyboardButton(text='/read')
-    but_add = types.KeyboardButton(text='/add')
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    but_read = telebot.types.KeyboardButton(text='/read')
+    but_add = telebot.types.KeyboardButton(text='/add')
     markup.add(but_add, but_read)
     db.DbQuery().add_user(message.from_user.id)
     bot.send_message(message.chat.id, 'Привет, я чат-бот для самых смешных анекдотов. Нажми на кнопку /read, чтобы читать смешные анекдоты', reply_markup=markup)
@@ -19,7 +23,6 @@ def start(message):
 def read(message):
     joke = db.DbQuery().get_random_joke(message.chat.id)
     bot.send_message(message.chat.id, joke[1])
-
 
 
 @bot.message_handler(commands=['add'])
