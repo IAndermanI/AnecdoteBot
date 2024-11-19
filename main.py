@@ -12,7 +12,7 @@ bot = telebot.TeleBot(API_KEY)
 def start(message):
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     but_read = telebot.types.KeyboardButton(text='/read')
-    markup.add(but_add, but_read)
+    markup.add(but_read)
     db.DbQuery().add_user(message.from_user.id)
     bot.send_message(message.chat.id, 'Привет, я чат-бот для самых смешных анекдотов. Нажми на кнопку /read, чтобы читать смешные анекдоты', reply_markup=markup)
 
