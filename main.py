@@ -25,15 +25,6 @@ def read(message):
     bot.send_message(message.chat.id, joke[1])
 
 
-@bot.message_handler(commands=['add'])
-def add(message):
-    bot.send_message(message.chat.id, 'Напишите свой анекдот, и он попадёт в мою базу данных')
-    @bot.message_handler(content_types=['text'])
-    def write_joke(msg):
-        db.DbQuery().insert_joke(joke_text=msg.text)
-        bot.send_message(msg.chat.id, 'Отлично, ваш анекдот в общей базе данных')
-
-
 @bot.message_handler(commands=['reset'])
 def reset(message):
     db.DbQuery().reset(message.chat.id)
